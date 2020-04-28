@@ -1,16 +1,18 @@
 class FirstUnique {
     private:
-        unordered_map<int,int> umap;
-        queue<int> unique;
+        unordered_map<int,int> freq; //Frequency map to store the freq of each element
+        queue<int> unique; //A queue to store the unique elements acc. to their occurence
 public:
     FirstUnique(vector<int>& nums) {
         helperSolve(nums);
     }
     
     int showFirstUnique() {
-        while(!unique.empty() && umap[unique.front()] != 1){
+        while(!unique.empty() && freq[unique.front()] != 1){
+			//If freq of front of queue is not 1, just remove that from the queue
             unique.pop();
         }
+		
         if(!unique.empty()){
             return unique.front();
         }else{
@@ -20,19 +22,21 @@ public:
     }
     
     void add(int value) {
-        umap[value] += 1;
-        if(umap[value] == 1){
+        freq[value] += 1;
+        if(freq[value] == 1){
+			//If the element being added occurs for first time, just add it to the unique queue
             unique.push(value);
         }
     }
     
     void helperSolve(vector<int> &nums){
         for(int i = 0 ; i < nums.size(); ++i){
-            umap[nums[i]] += 1;
+            freq[nums[i]] += 1;
         }
         
         for(int i = 0; i < nums.size(); i++){
-            if(umap[nums[i]] == 1){
+            if(freq[nums[i]] == 1){
+				//If freq of nums[i] is 1, push that in the queue
                 unique.push(nums[i]);
             }
         }
