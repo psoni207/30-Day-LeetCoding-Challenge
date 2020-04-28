@@ -16,6 +16,7 @@ public:
         if(!unique.empty()){
             return unique.front();
         }else{
+			//If the queue is empty just return -1
             return -1;
         }
         
